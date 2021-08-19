@@ -1,0 +1,21 @@
+query ExampleQuery {
+  users {
+    id
+    name
+    firstName
+    friends {
+      id
+      name
+      firstName
+      friends {
+        id
+        friends {
+          name
+          friends {
+            name
+          }
+        }
+      }
+    }
+  }
+}
