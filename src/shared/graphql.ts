@@ -50,11 +50,19 @@ export type AddUserMutationVariables = Exact<{
 
 export type AddUserMutation = { __typename?: 'Mutation', addUser: { __typename?: 'User', id: string, name: string } };
 
+export type BasicUserFragment = { __typename?: 'User', id: string, name: string };
+
 export type ExampleQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ExampleQueryQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, firstName: string, friends: Array<{ __typename?: 'User', id: string, name: string, firstName: string, friends: Array<{ __typename?: 'User', id: string, friends: Array<{ __typename?: 'User', name: string, friends: Array<{ __typename?: 'User', name: string }> }> }> }> }> };
+export type ExampleQueryQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string }> };
 
+export const BasicUserFragmentDoc = gql`
+    fragment BasicUser on User {
+  id
+  name
+}
+    `;
 export const AddUserDocument = gql`
     mutation AddUser($addUserData: UserInput!) {
   addUser(data: $addUserData) {
@@ -77,26 +85,10 @@ export const AddUserDocument = gql`
 export const ExampleQueryDocument = gql`
     query ExampleQuery {
   users {
-    id
-    name
-    firstName
-    friends {
-      id
-      name
-      firstName
-      friends {
-        id
-        friends {
-          name
-          friends {
-            name
-          }
-        }
-      }
-    }
+    ...BasicUser
   }
 }
-    `;
+    ${BasicUserFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

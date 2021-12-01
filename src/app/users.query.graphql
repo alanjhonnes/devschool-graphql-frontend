@@ -1,21 +1,10 @@
+fragment BasicUser on User {
+  id
+  name
+}
+
 query ExampleQuery {
   users {
-    id
-    name
-    firstName
-    friends {
-      id
-      name
-      firstName
-      friends {
-        id
-        friends {
-          name
-          friends {
-            name
-          }
-        }
-      }
-    }
+    ...BasicUser
   }
 }
